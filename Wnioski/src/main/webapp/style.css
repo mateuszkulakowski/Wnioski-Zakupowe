@@ -1,0 +1,57 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-01-21, 14:40:31
+    Author     : Patryk
+*/
+#wniosek_o_zakup
+{
+    font-size: 17px;
+}
+
+
+#Numer_rej_wniosku
+{
+    border:2px solid black;
+    margin-left: 75%;
+    size: auto;
+    text-align: center;
+    margin-right: 5%;
+}
+
+.oddzielna_sekcja
+{
+    border: 2px solid black;
+    width: 90%;
+    margin-left: 5%;
+    padding: 5px;
+}
+
+.wypelnia_dzial_zamowien_sekcja
+{
+    width: 90%;
+    margin-left: 10%;
+    font-size: 17px;
+}
+
+.przedmiot_zamowienia_sekcja
+{
+    width: 90%;
+    margin-left: 5%;
+    font-size: 17px;
+    padding: 5px;
+}
+
+
+.input_duzy
+{
+    width: 50%;
+}
+
+.input_max
+{
+    width: 100%;
+}

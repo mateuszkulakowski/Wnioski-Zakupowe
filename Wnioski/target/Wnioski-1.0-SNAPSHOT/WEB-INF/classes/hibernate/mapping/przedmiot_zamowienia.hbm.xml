@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="models.Przedmiot_zamowienia" table="PRZEDMIOT_ZAMOWIENIA">
+      <id name="Przedmiot_zamowienia_id" column="PRZEDMIOT_ZAMOWIENIA_ID" type="integer">
+          <generator class="increment"/>
+      </id>
+      
+      <property name="Wniosek_ID" column="WNIOSEK_ID" type="integer"/>
+      <property name="Data_osoby_dokonujacej_opisu" column="DATA_OSOBY_DOKONUJACEJ_OPISU" type="date"/>
+      <property name="Osoba_dokonujaca_opisu_ID" column="OSOBA_DOKONUJACA_OPISU_ID" type="integer"/>
+      <property name="Osoba_opiniujaca_tryb_udzielania_zam_ID" column="OSOBA_OPINIUJACA_TRYB_UDZIELANIA_ZAM_ID" type="integer"/>
+      <property name="Pelnomocnik_rektora_ID" column="PELNOMOCNIK_REKTORA_ID" type="integer"/>
+      
+  </class>
+</hibernate-mapping>

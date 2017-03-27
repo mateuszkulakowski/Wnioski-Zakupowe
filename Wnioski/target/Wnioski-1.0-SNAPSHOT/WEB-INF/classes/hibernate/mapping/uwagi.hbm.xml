@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+      <class name="models.Uwagi" table="UWAGI">
+      
+      <id name="uwaga_id" column="UWAGA_ID" type="integer">
+          <generator class="increment"/>
+      </id>
+
+      <property name="tresc" column="TRESC" type="string"/>
+      <property name="wniosek_id" column="WNIOSEK_ID" type="integer"/>
+      <property name="user_id" column="USER_ID" type="integer"/>
+      
+  </class>
+</hibernate-mapping>

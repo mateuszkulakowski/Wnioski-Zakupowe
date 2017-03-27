@@ -1,0 +1,331 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Składanie wniosku</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+            
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Wnioski/">Wnioski zakupowe</a>
+            </div>
+            
+            <c:if test="#{UserController.getUserRole().equalsIgnoreCase('Admin')}">
+                <div style="margin-top: 15px; float: left;">
+                    <a href="/Wnioski/rejestracja.xhtml">Nowy użytkownik</a> &nbsp;
+                    <h:link outcome="#{UserController.uprawnieniaAdmin()}" value="Lista użytkowników"/>
+                </div>
+            </c:if>
+            
+            <div class="nav navbar-right" style="float:left;">
+                Zalogowano jako: #{UserController.getUserName()}<br/>
+                <h:form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <h:commandButton action="#{UserController.Logout()}" value="Wyloguj"/>
+                </h:form>
+            </div>
+            <div style="clear:both"></div>
+
+        </div>
+    </nav>
+
+    <div class="container body-content col-lg-2" style="border-right:1px dashed lightgrey">
+       
+       
+        <br/><br/><br/><br/><br/>
+        
+        <c:if test="#{!UserController.getUserRole().equalsIgnoreCase('admin')}">
+            
+            <c:choose>
+                <c:when test="#{UserController.getUserRole().equalsIgnoreCase('wnioskodawca')}">
+                    <a href="/Wnioski/skladanieWniosku.xhtml">Złóż wniosek</a><br/>
+                    <a href="/Wnioski/mojeWnioski.xhtml">Moje wnioski</a><br/>
+                </c:when>
+                <c:when test="#{!UserController.getUserRole().equalsIgnoreCase('wnioskodawca')}">
+                    <a href="/Wnioski/mojeWnioski.xhtml">Wnioski zaakceptowane</a><br/>
+                    <h:link outcome="#{WniosekController.wnioskiDoAkceptacji()}" value="Wnioski do akceptacji"/><br/>
+                </c:when>
+            </c:choose>
+            
+        </c:if>
+        
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+
+    <div class="container body-content col-lg-10">
+        
+        <h:form>
+            <br/><br/><br/><br/><br/>
+            
+            <h:commandButton action="#{WniosekController.Zatwierdz('zobaczWniosekKBRIPM')}" value="Zatwierdź Wniosek"/><br/>
+            <h:commandButton action="#{WniosekController.Odrzuc('zobaczWniosekKBRIPM')}" value="Odrzuć Wniosek"/><br/>
+            Pole zaznaczone na zielono w poniższym formularzu należy wypełnić.
+            <br/><br/><br/>
+            <div id="wniosek_o_zakup">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <h4 style="width: 100%;text-align: center;">Wniosek o zakup</h4>
+
+                <br/>
+                <br/>
+
+
+                <div id="Numer_rej_wniosku">
+                    Nr rej. wniosku<br/>
+                    <h:inputText value="#{WniosekController.wniosekView.nr_rej_wniosku}" disabled="true"/>
+                </div>
+
+                <br/><br/>
+
+
+                <div class="oddzielna_sekcja">
+                    <strong>1.1.</strong> Jednostka organizacyjna uczelni<br/>
+                    <h:inputText  class="input_duzy" value="#{WniosekController.wniosekView.jednostka_org_uczelni}" disabled="true"/><br/>
+                    <strong>1.2.</strong> Wnioskodawca <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.wnioskodawca}" disabled="true"/> tel. <h:inputText value="#{WniosekController.wniosekView.wnioskodawca_tel}" disabled="true"/> <br/>
+                    <strong>1.3.</strong> Osoba dokonująca opisu przedmiotu zamówienia / Przedstawiciel do komisji przetargowej:<br/>
+                    <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.os_dok_opisu_prz_zam}" disabled="true"/>, tel. <h:inputText value="#{WniosekController.wniosekView.os_dok_opisu_prz_zam_tel}" disabled="true"/>, e-mail: <h:inputText value="#{WniosekController.wniosekView.os_dok_opisu_prz_zam_e_mail}" disabled="true"/>
+
+                </div>
+
+                <br/>
+
+
+                <div class="oddzielna_sekcja">
+                    <strong>2.Przedmiot zamówienia</strong>  <br/>
+                    <h:inputTextarea class="input_max" value="#{WniosekController.wniosekView.przedmiot_zamowienia}" disabled="true"/><br/>
+                    - Określono na okres: <input value="#{WniosekController.wniosekView.przedmiot_zamowienia_okres}" disabled="true"/>
+                    <br/>
+                    <p style="text-align: center;">(Szczegółowy opis w załączniku do wniosku)</p>
+                </div>
+
+                <br/>
+
+                <div class="oddzielna_sekcja">
+                    <strong>3.1. Merytoryczne uzasadnienie celowości dokonania zakupu </strong> <br/>
+                    <h:inputTextarea class="input_max" value="#{WniosekController.wniosekView.metoryczne_uzas_cel_dok_zakupu}" disabled="true"/><br/>
+                    <strong>3.2.</strong> Termin realizacji zamówienia: <input value="#{WniosekController.wniosekView.termin_realizacji_zam}" disabled="true"/>
+                </div>
+
+                <br/>
+
+                <div class="oddzielna_sekcja">
+                    <strong>4.1. Szacunkowa wartość zamówienia (netto): </strong> <h:inputText value="#{WniosekController.wniosekView.szacunkowa_wartosc_zam}" disabled="true"/> zł <br/>
+                    Ustalenia szacunkowej wartości zamówienia dokonano na podstawie: <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.ustalenia_szac_wartosci}" disabled="true"/><br/>
+                    Osoba dokonująca ustalenia wartości szacunkowej zamówienia:  <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.osoba_dok_ustalenia_szac_wart_zam}" disabled="true"/><br/>
+                    <strong>4.2. Kwota przeznaczona na sfinansowanie zamówienia (brutto): </strong> <h:inputText value="#{WniosekController.wniosekView.kwota_przeznaczona_sfinans_zam}" disabled="true"/> zł<br/>
+                    <strong>4.3. Źródło finansowania </strong> <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.zrodlo_sfinansowania}" disabled="true"/>
+                    <br/>
+                    <br/><br/>
+                    <div style="float:left;">
+                        Data: <input value="#{WniosekController.wniosekView.data_osoby_szacujacej}" disabled="true"/><br/>
+                        Podpis osoby dokonującej szacowania i opisu przedmiotu zamówienia: <input style="width:250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.osoba_szacujacaID)}" disabled="true"/>
+                    </div>
+                    <div style="float:right;">
+                        Data: <input value="#{WniosekController.wniosekView.data_wnioskodawcy}" disabled="true"/><br/>
+                        Podpis wnioskodawcy: <input style="width: 250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.osoba_wnioskodawcaID)}" disabled="true"/>
+
+                    </div>
+                    <div style="clear: both;"></div>
+
+
+                </div>
+
+
+                <br/>
+
+
+                <div class="oddzielna_sekcja">
+                    <strong>5.1. Potwierdzenie pokrycia finansowego ze środków na prace naukowo-badawcze:</strong><br/>
+                    <h:inputText class="input_max" value="#{WniosekController.wniosekView.potwierdzenie_pokrycia_fin_ze_srodkow}" disabled="true"/><br/><br/>   
+
+                    <div style="text-align: right;">
+                        Data: <input value="#{WniosekController.wniosekView.potwierdzenie_pokrycia_fin_ze_srodkow_data}" disabled="true"/><br/>
+                        Podpis kierownika Działu Nauki: <input style="width: 250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.kierownik_dzialu_naukID)}" disabled="true"/>
+                    </div>
+                    <br/>
+
+                    <strong>5.2. Potwierdzenie zgodności z budżetem projektu:</strong>
+                    <h:inputText style="border-color: green;" class="input_max" value="#{WniosekController.wniosekView.potwierdzenie_zgodnosci_budzet}"/><br/><br/>
+
+                    <div style="text-align: right;">
+                        Data: <input value="#{WniosekController.wniosekView.potwierdzenie_zgodnosci_budzet_data}" disabled="true"/><br/>
+                        Podpis kierownika BRPM/BWM: <input style="width: 250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.kierownik_BRPM_BWM_ID)}" disabled="true"/>
+                    </div>
+                    <br/>
+
+                </div>
+
+                <br/>
+
+
+                <div class="oddzielna_sekcja">
+                    <strong>6.1. Zgodność z planem rzeczowo – finansowym </strong> <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.zgodnosc_z_planem_rzeczowym}" disabled="true"/><br/>
+                    <strong>6.2. Kontrasygnata finansowa (uwagi): </strong> <h:inputText class="input_duzy" value="#{WniosekController.wniosekView.kontrasygnata_uwagi}" disabled="true"/><br/><br/>
+
+                    <div style="text-align: right;">
+                        Data: <input value="#{WniosekController.wniosekView.kontrasygnata_data}" disabled="true"/><br/>
+                        Podpis kwestora: <input style="width: 250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.kwestor_ID)}" disabled="true"/>
+                    </div>
+                    <br/>
+                </div>
+
+                <br/><br/><br/>
+
+                <div style="text-align: right;">
+                    <div style="margin-right: 300px;">ZATWIERDZAM</div>
+                    <div style="margin-right: 220px;"><input style="width: 250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.szef_pionuID)}" disabled="true"/></div>
+                </div>
+
+                <br/><br/>
+                <br/><br/>
+
+
+
+                <div style="font-size: 17px;background-color: lightgrey; width: 90%;margin: 5%; height: 50px; text-align: center;padding: 10px">WYPEŁNIA DZIAŁ ZAMÓWIEŃ</div>
+                <br/>
+
+                <div class="wypelnia_dzial_zamowien_sekcja">
+                    <div style="float:left;"><strong>7.</strong> Data złożenia wniosku w Dziale Zamówień Publicznych</div> <div style="float:right;text-align:right;margin-right:150px;"><input value="#{WniosekController.wniosekView.data_zlozenia_w_dziale_zam_pub}" disabled="true"/></div><br/>
+                    <br/><br/>
+                    <div style="clear: both;text-align: right; margin-right: 500px;">
+                        Podpis osoby przyjmującej wniosek:<br/>
+                        <input style="width: 300px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.osoba_przyjmujaca_wniosek_ID)}" disabled="true"/>
+                    </div>
+
+                    <br/><br/>
+
+                    <strong>8.</strong> Uwagi Działu Zamówień Publicznych dotyczące wniosku:<br/>
+                    <h:inputTextarea style="width: 80%;" value="#{WniosekController.wniosekView.uwagi_działu_zam_pub_dot_wniosku}" disabled="true"/><br/><br/>
+
+                    <strong>9.</strong> Opinia Działu Zamówień Publicznych dotycząca procedury postępowania o udzielenie zamówienia.<br/>
+                       Postępowanie o udzielenie zamówienia prowadzić będzie: <br/><br/><br/>
+
+                       <table width="80%" border="2">
+                           <tr>
+                               <th></th>
+                               <th>PRZEDMIOT ZAMÓWIENIA - Numery pozycji wykazu załączonego do wniosku (zgodnie z załącznikiem)</th>
+                           </tr>
+                           <tr>
+                               <td>KOMISJA PRZETARGOWA</td>
+                               <td><h:inputTextarea style="width: 70%;" value="#{WniosekController.wniosekView.komisja_przetargowa}" disabled="true"/></td>
+                           </tr>
+                           <tr>
+                               <td>DZIAŁ APARATURY BADAWCZEJ I DYDAKTYCZNEJ</td>
+                               <td><h:inputTextarea style="width: 70%;" value="#{WniosekController.wniosekView.dzial_aparatury_badawczej}" disabled="true"/></td>
+                           </tr>
+                           <tr>
+                               <td>WNIOSKODAWCA w uzgodnieniu z DZIAŁEM NAUKI</td>
+                               <td><h:inputTextarea style="width: 70%;" value="#{WniosekController.wniosekView.wnioskodawca_z_uzg_z_dz_nauki}" disabled="true"/></td>
+                           </tr>
+                           <tr>
+                               <td>Dział <h:inputText value="#{WniosekController.wniosekView.dzial}" disabled="true"/></td>
+                               <td><h:inputTextarea style="width: 70%;" value="#{WniosekController.wniosekView.dzial_value}" disabled="true"/></td>
+                           </tr>
+                           <tr>
+                               <td><h:inputText value="#{WniosekController.wniosekView.pusty}" disabled="true"/></td>
+                               <td><h:inputTextarea style="width: 70%;" value="#{WniosekController.wniosekView.pusty_value}" disabled="true"/></td>
+                           </tr>
+                           <tr>
+                               <td>WNIOSKODAWCA</td>
+                               <td><h:inputTextarea style="width: 70%;" value="#{WniosekController.wniosekView.wnioskodawca_tabelka}" disabled="true"/></td>
+                           </tr>
+                       </table>
+
+                       <br/>
+                       <div>
+                           Podpis kierownika Działu Zamówień Publicznych:<br/>
+                           <input style="width: 250px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.kierownik_dzialu_zam_pub_ID)}" disabled="true"/>
+                       </div>
+
+                       <br/>
+                       <br/>
+                       <div style="text-align: right; margin-right: 300px;"><strong>ZATWIERDZAM DO REALIZACJI</strong>
+                           <br/>
+                           Pełnomocnik Rektora: <input value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.wniosekView.pelnomocnik_rektora_ID)}" disabled="true"/>
+                       </div>
+                       <br/>
+
+
+
+                </div>
+
+
+
+                <div style="font-size: 20px;width: 90%;margin: 5%; height: 50px; text-align: center;padding: 5px"><strong>PRZEDMIOT ZAMÓWIENIA</strong></div>
+
+                <div class="przedmiot_zamowienia_sekcja">
+                    kolumny   1 - 6  wypełnia Wnioskodawca,<br/>
+                    kolumnę   7  wypełnia Dział Zamówień Publicznych<br/><br/>
+
+
+                    <table id="tabelka_przedmioty_zamowienia" border="2" width="80%">
+                        <tr id="naglowek" align="center">
+                            <th>Lp.</th>
+                            <th>Nazwa (opis) przedmiotu zamówienia</th>
+                            <th>Jednostka miary</th>
+                            <th>Ilość</th>
+                            <th>Kwota przeznaczona na realizację zamówienia(zł brutto)</th>
+                            <th>Pozycja w planie zamówień jednostki</th>
+                            <th>Opinia dotycząca trybu udzielenia zamówienia* (wypełnia dzp)</th>
+                        </tr>
+                        <tr id="0" align="center">
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                        </tr>
+
+                        <c:forEach var="pozycja" items="#{WniosekController.listaPrzedmiotowZamowienia}" varStatus="loop">
+                            <tr id="${loop.index+1}" align="center">
+                                <td>${loop.index+1}.</td>
+                                <td><input type="text" name="nazwa${loop.index+1}" disabled="true" value="#{pozycja.nazwa_opis_przedmiotu_zam}"/></td>
+                                <td><input type="text" name="jednostka${loop.index+1}" disabled="true" value="#{pozycja.jednostka_miary}"/></td>
+                                <td><input type="number" name="ilosc${loop.index+1}" disabled="true" value="#{pozycja.ilosc}"/></td>
+                                <td><input type="number" step="0.01" name="kwota${loop.index+1}" disabled="true" value="#{pozycja.kwota_przeznaczona_na_real}"/></td>
+                                <td><input type="number" name="pozycja${loop.index+1}" disabled="true" value="#{pozycja.pozycja_w_planie_zam_jedn}"/></td>
+                                <td><input type="text" name="opinia${loop.index+1}" disabled="true" value="#{pozycja.opinia_dot_trybu_udzielania_zam}"/></td>
+                            </tr>
+                        </c:forEach>
+
+                    </table>
+                    <br/><br/>
+                    <div style="float: left;">Data: <input value="#{WniosekController.przedmiot_zamowienia.data_osoby_dokonujacej_opisu}" disabled="true"/><br/>
+                        Podpis osoby dokonującej opisu przedmiotu zamówienia: <input style="width: 300px;" value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.przedmiot_zamowienia.osoba_dokonujaca_opisu_ID)}" disabled="true"/>
+
+                    </div>
+                    <div style="float: right;"> Podpis osoby opiniującej tryb udzielenia zamówienia:<br/>
+                        <input value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.przedmiot_zamowienia.osoba_opiniujaca_tryb_udzielania_zam_ID)}" disabled="true"/><br/>
+                        <br/><br/><br/>
+                        <strong>zatwierdzam</strong><br/>
+                        Podpis Pełnomocnika Rektora:<br/>
+                        <input value="#{WniosekController.getImieNazwiskoByUserID(WniosekController.przedmiot_zamowienia.pelnomocnik_rektora_ID)}" disabled="true"/>
+
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+
+                <br/><br/><br/>
+
+            </div>
+        </h:form>
+            
+<br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+    </h:body>
+</html>
+

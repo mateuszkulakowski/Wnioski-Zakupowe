@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Moje wnioski</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+            
+    </h:head>
+    <h:body>
+                <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Wnioski/">Wnioski zakupowe</a>
+            </div>
+            
+            <c:if test="#{UserController.getUserRole().equalsIgnoreCase('Admin')}">
+                <div style="margin-top: 15px; float: left;">
+                    <a href="/Wnioski/rejestracja.xhtml">Nowy użytkownik</a> &nbsp;
+                    <h:link outcome="#{UserController.uprawnieniaAdmin()}" value="Lista użytkowników"/>
+                </div>
+            </c:if>
+            
+            <div class="nav navbar-right" style="float:left;">
+                Zalogowano jako: #{UserController.getUserName()}<br/>
+                <h:form>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <h:commandButton action="#{UserController.Logout()}" value="Wyloguj"/>
+                </h:form>
+            </div>
+            <div style="clear:both"></div>
+
+        </div>
+    </nav>
+
+    <div class="container body-content col-lg-2" style="border-right:1px dashed lightgrey">
+       
+       
+        <br/><br/><br/><br/><br/>
+        
+        <c:if test="#{!UserController.getUserRole().equalsIgnoreCase('admin')}">
+            
+            <c:choose>
+                <c:when test="#{UserController.getUserRole().equalsIgnoreCase('wnioskodawca')}">
+                    <a href="/Wnioski/skladanieWniosku.xhtml">Złóż wniosek</a><br/>
+                    <a href="/Wnioski/mojeWnioski.xhtml">Moje wnioski</a><br/>
+                </c:when>
+                <c:when test="#{!UserController.getUserRole().equalsIgnoreCase('wnioskodawca')}">
+                    <a href="/Wnioski/mojeWnioski.xhtml">Wnioski zaakceptowane</a><br/>
+                    <h:link outcome="#{WniosekController.wnioskiDoAkceptacji()}" value="Wnioski do akceptacji"/><br/>
+                </c:when>
+            </c:choose>
+            
+        </c:if>
+        
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+        
+        <div class="container body-content col-lg-10">
+            <br/><br/><br/><br/>
+            
+            <h3>Moje wnioski</h3>
+            <br/>
+        
+                <h:form>
+                    <h:dataTable role="table" var="wniosek" value="#{WniosekController.mojeWnioski()}" border="1" class="table table-hover col-lg-2">
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{wniosek.wniosek_ID}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nr rej. wniosku</f:facet>
+                            <h:outputText value="#{wniosek.nr_rej_wniosku}"></h:outputText> 
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Data złożenia</f:facet>
+                            <h:outputText value="#{wniosek.data_wnioskodawcy}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Stan</f:facet>
+                            <h:outputText value="#{wniosek.stan}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">OPCJA</f:facet>
+                            <h:commandLink value="Podgląd" action="#{WniosekController.Podglad(wniosek)}"></h:commandLink> |
+                            <h:commandLink value="Edytuj" action="#{WniosekController.edit(wniosek)}"></h:commandLink> |
+                            <h:commandLink value="Usuń" action="#{WniosekController.delete(wniosek)}"></h:commandLink>
+                            <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+                        </h:column>
+                        </h:dataTable>
+                    </h:form>
+        </div>        
+    </h:body>
+</html>

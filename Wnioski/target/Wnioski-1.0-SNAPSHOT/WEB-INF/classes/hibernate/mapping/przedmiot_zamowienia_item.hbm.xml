@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  
+    <class name="models.Przedmiot_zamowienia_item" table="PRZEDMIOT_ZAMOWIENIA_ITEM">
+        
+        <id name="Przedmiot_zam_item_id" column="PRZEDMIOT_ZAM_ITEM_ID" type="integer">
+            <generator class="increment"/>
+        </id>
+        
+        <property name="Nazwa_opis_przedmiotu_zam" column="NAZWA_OPIS_PRZEDMIOTU_ZAM" type="string"/>
+        <property name="Jednostka_miary" column="JEDNOSTKA_MIARY" type="string"/>
+        <property name="Ilosc" column="ILOSC" type="integer"/>
+        <property name="Kwota_przeznaczona_na_real" column="KWOTA_PRZEZNACZONA_NA_REAL" type="double"/>
+        <property name="Pozycja_w_planie_zam_jedn" column="POZYCJA_W_PLANIE_ZAM_JEDN" type="integer"/>
+        <property name="Opinia_dot_trybu_udzielania_zam" column="OPINIA_DOT_TRYBU_UDZIELANIA_ZAM" type="string"/>
+        <property name="Przedmiot_zamowienia_ID" column="PRZEDMIOT_ZAMOWIENIA_ID" type="integer"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    
+  <class name="models.Wniosek" table="WNIOSKI">
+      
+      <id name="Wniosek_ID" column="WNIOSEK_ID" type="integer">
+          <generator class="increment"/>
+      </id>
+
+      <property name="Stan" column="STAN" type="string"/>
+      <property name="Nr_rej_wniosku" column="NR_REJ_WNIOSKU" type="integer"/>
+      <property name="Jednostka_org_uczelni" column="JEDNOSTKA_ORG_UCZELNI" type="string"/>
+      <property name="Wnioskodawca" column="WNIOSKODAWCA" type="string"/>
+      <property name="Wnioskodawca_tel" column="WNIOSKODAWCA_TEL" type="integer"/>
+      <property name="Os_dok_opisu_prz_zam" column="OS_DOK_OPISU_PRZ_ZAM" type="string"/>
+      <property name="Os_dok_opisu_prz_zam_tel" column="OS_DOK_OPISU_PRZ_ZAM_TEL" type="integer"/>
+      <property name="Os_dok_opisu_prz_zam_e_mail" column="OS_DOK_OPISU_PRZ_ZAM_E_MAIL" type="string"/>
+      <property name="Przedmiot_zamowienia" column="PRZEDMIOT_ZAMOWIENIA" type="string"/>
+      <property name="Przedmiot_zamowienia_okres" column="PRZEDMIOT_ZAMOWIENIA_OKRES" type="date"/>
+      <property name="Metoryczne_uzas_cel_dok_zakupu" column="METORYCZNE_UZAS_CEL_DOK_ZAKUPU" type="string"/>
+      <property name="Termin_realizacji_zam" column="TERMIN_REALIZACJI_ZAM" type="date"/>
+      <property name="Szacunkowa_wartosc_zam" column="SZACUNKOWA_WARTOSC_ZAM" type="double"/>
+      <property name="Ustalenia_szac_wartosci" column="USTALENIA_SZAC_WARTOSCI" type="string"/>
+      <property name="Osoba_dok_ustalenia_szac_wart_zam" column="OSOBA_DOK_USTALENIA_SZAC_WART_ZAM" type="string"/>
+      <property name="Kwota_przeznaczona_sfinans_zam" column="KWOTA_PRZEZNACZONA_SFINANS_ZAM" type="double"/>
+      <property name="Zrodlo_sfinansowania" column="ZRODLO_SFINANSOWANIA" type="string"/>
+      <property name="Data_osoby_szacujacej" column="DATA_OSOBY_SZACUJACEJ" type="date"/>
+      <property name="Osoba_szacujacaID" column="OSOBA_SZACUJACAID" type="integer"/>
+      <property name="Data_wnioskodawcy" column="DATA_WNIOSKODAWCY" type="date"/>
+      <property name="Osoba_wnioskodawcaID" column="OSOBA_WNIOSKODAWCAID" type="integer"/>
+      <property name="Potwierdzenie_pokrycia_fin_ze_srodkow" column="POTWIERDZENIE_POKRYCIA_FIN_ZE_SRODKOW" type="string"/>
+      <property name="Potwierdzenie_pokrycia_fin_ze_srodkow_data" column="POTWIERDZENIE_POKRYCIA_FIN_ZE_SRODKOW_DATA" type="date"/>
+      <property name="Kierownik_dzialu_naukID" column="KIEROWNIK_DZIALU_NAUKID" type="integer"/>
+      <property name="Potwierdzenie_zgodnosci_budzet" column="POTWIERDZENIE_ZGODNOSCI_BUDZET" type="string"/>
+      <property name="Potwierdzenie_zgodnosci_budzet_data" column="POTWIERDZENIE_ZGODNOSCI_BUDZET_DATA" type="date"/>
+      <property name="Kierownik_BRPM_BWM_ID" column="KIEROWNIK_BRPM_BWM_ID" type="integer"/>
+      <property name="Zgodnosc_z_planem_rzeczowym" column="ZGODNOSC_Z_PLANEM_RZECZOWYM" type="string"/>
+      <property name="Kontrasygnata_uwagi" column="KONTRASYGNATA_UWAGI" type="string"/>
+      <property name="Kontrasygnata_data" column="KONTRASYGNATA_DATA" type="date"/>
+      <property name="Kwestor_ID" column="KWESTOR_ID" type="integer"/>
+      <property name="Szef_pionuID" column="SZEF_PIONUID" type="integer"/>
+      
+      
+      <property name="Data_zlozenia_w_dziale_zam_pub" column="DATA_ZLOZENIA_W_DZIALE_ZAM_PUB" type="date"/>
+      <property name="Osoba_przyjmujaca_wniosek_ID" column="OSOBA_PRZYJMUJACA_WNIOSEK_ID" type="integer"/>
+      <property name="Uwagi_działu_zam_pub_dot_wniosku" column="UWAGI_DZIAŁU_ZAM_PUB_DOT_WNIOSKU" type="string"/>
+      <property name="Komisja_przetargowa" column="KOMISJA_PRZETARGOWA" type="string"/>
+      <property name="Dzial_aparatury_badawczej" column="DZIAL_APARATURY_BADAWCZEJ" type="string"/>
+      <property name="Wnioskodawca_z_uzg_z_dz_nauki" column="WNIOSKODAWCA_Z_UZG_Z_DZ_NAUKI" type="string"/>
+      <property name="Dzial" column="DZIAL" type="string"/>
+      <property name="Dzial_value" column="DZIAL_VALUE" type="string"/>
+      <property name="Pusty" column="PUSTY" type="string"/>
+      <property name="Pusty_value" column="PUSTY_VALUE" type="string"/>
+      <property name="Wnioskodawca_tabelka" column="WNIOSKODAWCA_TABELKA" type="string"/>
+      <property name="Kierownik_dzialu_zam_pub_ID" column="KIEROWNIK_DZIALU_ZAM_PUB_ID" type="integer"/>
+      <property name="Pelnomocnik_rektora_ID" column="PELNOMOCNIK_REKTORA_ID" type="integer"/>
+      
+  </class>
+</hibernate-mapping>
